@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/me/theditor/xelt/commands/music/LeaveCommand.java=UTF-8
+encoding//src/me/theditor/xelt/commands/music/PauseCommand.java=UTF-8
+encoding//src/me/theditor/xelt/commands/music/ResumeCommand.java=UTF-8
+encoding//src/me/theditor/xelt/commands/music/SkipCommand.java=UTF-8
