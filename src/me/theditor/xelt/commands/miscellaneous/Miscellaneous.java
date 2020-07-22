@@ -13,13 +13,11 @@ public class Miscellaneous extends CommandCategory{
 	public Miscellaneous() {
 		commands = new ArrayList<>();
 		commands.add(new HelpCommand(this));
-		commands.add(new InviteCommand(this));
 		commands.add(new PrefixCommand(this));
 		commands.add(new PurgeCommand(this));
 		commands.add(new WhoIsCommand(this));
 		commands.add(new AvatarCommand(this));
 		commands.add(new ServerInfoCommand(this));
-		commands.add(new DonateCommand(this));
 	}
 
 	@Override

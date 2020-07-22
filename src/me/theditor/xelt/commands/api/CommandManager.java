@@ -12,6 +12,7 @@ import me.theditor.xelt.commands.moderation.Moderation;
 import me.theditor.xelt.commands.music.Music;
 import me.theditor.xelt.commands.tickets.Tickets;
 import me.theditor.xelt.commands.voice.Voice;
+import me.theditor.xelt.commands.xelt.XeltCat;
 import me.theditor.xelt.handlers.GuildHandler;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -34,6 +35,7 @@ public class CommandManager extends ListenerAdapter {
 		categories.add(new Voice());
 		categories.add(new Fun());
 		categories.add(new Miscellaneous());
+		categories.add(new XeltCat());
 	}
 
 	@Override
@@ -42,24 +44,34 @@ public class CommandManager extends ListenerAdapter {
 			if(hiddenCmd(e))
 				return;
 		}
-		if (e.getMessage().getContentDisplay().startsWith("@" + e.getGuild().getSelfMember().getEffectiveName()  + "prefix")
-				|| e.getMessage().getContentDisplay().startsWith("@" + e.getGuild().getSelfMember().getEffectiveName()  + " prefix")) {
-			List<String> tempArgs = Arrays.asList(e.getMessage().getContentRaw().split(" "));
-			List<String> args = new ArrayList<>();
-			for (int i = tempArgs.get(1).equals("prefix")? 2: 1; i < tempArgs.size(); i++) {
-				args.add(tempArgs.get(i));
-			}
-			this.getCommand("prefix").run(e, args);
-			return;
-		}
 
 		if (e.getMember().getUser().isBot())
 			return;
 
-		List<String> tempArgs = Arrays.asList(e.getMessage().getContentRaw().split(" "));
-		if (!tempArgs.get(0).startsWith(GuildHandler.getGuildPrefix(e.getGuild())))
+		String prefix = GuildHandler.getGuildPrefix(e.getGuild());
+		
+		List<String> tempArgs = new ArrayList<>();
+		tempArgs.addAll(Arrays.asList(e.getMessage().getContentRaw().split(" ")));
+		boolean tag = false;
+		String effective = "@" + e.getGuild().getSelfMember().getEffectiveName();
+		if(e.getMessage().getContentDisplay().equals(effective)) {
+			this.getCommand("prefix").run(e, new ArrayList<>());
 			return;
-		String cmd = tempArgs.get(0).substring(GuildHandler.getGuildPrefix(e.getGuild()).length());
+		}
+		if (e.getMessage().getContentDisplay().startsWith(effective)) {
+			if(e.getMessage().getContentDisplay().startsWith(effective + " ")) {
+				tempArgs.remove(0);
+			} else {
+				tempArgs.set(0, tempArgs.get(0).substring(Xelt.jda.getSelfUser().getId().length() + 4, tempArgs.get(0).length()));
+			}
+			tag = true;
+		}
+		if (!tempArgs.get(0).startsWith(prefix) && !tag)
+			return;
+		if(!tag) {
+			tempArgs.set(0, tempArgs.get(0).substring(prefix.length()));
+		}
+		String cmd = tempArgs.get(0);
 		List<String> args = new ArrayList<>();
 		for (int i = 1; i < tempArgs.size(); i++) {
 			args.add(tempArgs.get(i));

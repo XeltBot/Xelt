@@ -36,6 +36,9 @@ public class Xelt {
 	private String redditSecret;
 	private UserAgent userAgent;
 	
+	private String redditUsername;
+	private String redditPassword;
+	
 	private AudioPlayerManager playerManager;
 	private AudioPlayerHandler audioPlayerHandler;
 
@@ -53,6 +56,8 @@ public class Xelt {
 		this.youtubeKey = Config.get("YOUTUBE_KEY");
 		this.redditClientId = Config.get("REDDIT_CLIENT_ID");
 		this.redditSecret = Config.get("REDDIT_SECRET");
+		this.redditUsername = Config.get("REDDIT_USERNAME");
+		this.redditPassword = Config.get("REDDIT_PASSWORD");
 		this.userAgent = new UserAgent("bot", "me.theditor.xelt", "v0.0.1", "theditor");
 		
 		this.logger = new Logger();
@@ -215,4 +220,13 @@ public class Xelt {
 	public UserAgent getUserAgent() {
 		return userAgent;
 	}
+	
+	public String getRedditUsername() {
+		return redditUsername;
+	}
+	
+	public String getRedditPassword() {
+		return redditPassword;
+	}
+	
 }

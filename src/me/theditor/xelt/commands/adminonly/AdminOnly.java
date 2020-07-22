@@ -13,7 +13,7 @@ public class AdminOnly extends CommandCategory {
 	public AdminOnly() {
 		commands = new ArrayList<>();
 		commands.add(new ShutdownCommand(this));
-		commands.add(new StatsCommand(this));
+		commands.add(new ListGuildsCommand(this));
 	}
 
 	@Override

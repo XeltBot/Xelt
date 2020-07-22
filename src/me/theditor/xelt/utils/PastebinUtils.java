@@ -15,13 +15,13 @@ public class PastebinUtils {
 	private static PastebinFactory factory = new PastebinFactory();
 	private static Pastebin pastebin = factory.createPastebin(Config.get("PASTEBIN_DEV_KEY"));
 
-	public static String newPaste(String title, String raw) {
+	public static String newPaste(String title, String raw, PasteExpire expire) {
 		final PasteBuilder pasteBuilder = factory.createPaste();
 		pasteBuilder.setTitle(title);
 		pasteBuilder.setRaw(raw);
 		pasteBuilder.setMachineFriendlyLanguage("text");
 		pasteBuilder.setVisiblity(PasteVisiblity.Private);
-		pasteBuilder.setExpire(PasteExpire.OneWeek);
+		pasteBuilder.setExpire(expire);
 
 		final Paste paste = pasteBuilder.build();
 		final Response<String> postResult = pastebin.post(paste);
@@ -31,6 +31,10 @@ public class PastebinUtils {
 		}
 		
 		return postResult.get();
+	}
+	
+	public static String newPaste(String title, String raw) {
+		return newPaste(title, raw, PasteExpire.OneWeek);
 	}
 
 }

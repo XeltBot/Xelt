@@ -3,6 +3,8 @@ package me.theditor.xelt.commands.miscellaneous;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import me.theditor.xelt.commands.api.BaseCommand;
@@ -16,9 +18,13 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class PurgeCommand extends BaseCommand {
 	
 	private CommandCategory category;
+	private List<Guild> cooldown;
+	private Timer timer;
 
 	public PurgeCommand(CommandCategory category) {
 		this.category = category;
+		cooldown = new ArrayList<>();
+		timer = new Timer();
 	}
 
 	@Override
@@ -50,6 +56,10 @@ public class PurgeCommand extends BaseCommand {
 			MessageUtils.errorMessage("Invalid command usage!", e.getChannel());
 			return;
 		}
+		
+		if (cooldown.contains(e.getGuild())) {
+			MessageUtils.errorMessage("Command on cooldown, please wait 3 seconds!", e.getChannel());
+		}
 
 		Message delete = e.getMessage();
 
@@ -63,10 +73,20 @@ public class PurgeCommand extends BaseCommand {
 		
 		delete.delete().queue();
 		
+		cooldown.add(e.getGuild());
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				cooldown.remove(e.getGuild());
+			}
+			
+		}, 1000 * 3);
+		
 		List<String> msgs = new ArrayList<>();
 		msgs.add("Purged " + limit + " messages from channel " + e.getChannel().getAsMention());
-		msgs.add("This message will self-destruct in 5 seconds!");
-		e.getChannel().sendMessage(MessageUtils.noFieldMessageEmbed("Purge Complete", msgs, Color.green, e.getChannel()).build()).complete().delete().queueAfter(5, TimeUnit.SECONDS);
+		msgs.add("This message will self-destruct in 3 seconds!");
+		e.getChannel().sendMessage(MessageUtils.noFieldMessageEmbed("Purge Complete", msgs, Color.green, e.getChannel()).build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
 
 	}
 

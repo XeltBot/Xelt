@@ -79,9 +79,11 @@ public class WhoIsCommand extends BaseCommand{
 		title.add("Acknowledgements");
 		msgs.add(member.isOwner()? "Server Owner" : member.hasPermission(Permission.ADMINISTRATOR) ? "Server Admin" : "Normal Member");
 		
+		String avatarUrl = member.getUser().getAvatarUrl();
+		avatarUrl = avatarUrl == null ? member.getUser().getDefaultAvatarUrl() : avatarUrl;
 		EmbedBuilder embed = MessageUtils.multiFieldMessageEmbed(null, title, msgs, e.getChannel());
-		embed.setAuthor(member.getUser().getAsTag(), null, member.getUser().getAvatarUrl());
-		embed.setThumbnail(member.getUser().getAvatarUrl());
+		embed.setAuthor(member.getUser().getAsTag(), null, avatarUrl);
+		embed.setThumbnail(avatarUrl);
 		embed.setDescription(member.getAsMention() + "\nID: " + member.getId());
 		e.getChannel().sendMessage(embed.build()).queue();
 	}
