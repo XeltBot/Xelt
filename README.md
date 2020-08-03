@@ -54,5 +54,4 @@ Xelt has a bunch of fun commands that you can use 8Ball, Roll, Hug, Bite, Enlarg
 subreddit, so you can see memes from your favourite subreddit.
 
 ###### Voice
-Xelt supports recording audio in channels and then sending them to you. There are two commands - record, stop. You can use these commands to record audio. Currently, Xelt 
-has a limitation of recording not more than 8 MB (Discord limitation), however, this limitation will be removed soon.
+Xelt supports recording audio in channels and then sending them to you. There are two commands - record, stop. You can use these commands to record audio. Currently, Xelt has a limitation of recording only up to 8 MB (Discord limitation), however, this limitation will be removed soon.
