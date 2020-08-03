@@ -16,7 +16,7 @@ and have used it before.
 - Voice (Added 19th July 2020)
 
 ## Invite
-You can invite Xelt [here](https://discord.com/api/oauth2/authorize?client_id=726763157195849728&permissions=8&scope=bot)
+You can invite Xelt [here](https://discord.com/oauth2/authorize?client_id=726763157195849728&permissions=272105079&scope=bot)
 
 ## Dependencies
 - [Discord JDA](https://github.com/DV8FromTheWorld/JDA)
