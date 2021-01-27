@@ -1,4 +1,4 @@
-# Xelt
+# (Deprecated) Xelt
 
 ## Overview
 Xelt is my Discord bot which I coded from scratch in 3 days code-time.
